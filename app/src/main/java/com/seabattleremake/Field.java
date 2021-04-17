@@ -13,11 +13,20 @@ import static com.seabattleremake.Ship.tMine;
 
 public class Field {
     ArrayList<Ship> ships;
-    public Field () {
-
-    }
+    ArrayList<Point> misses;
+    ArrayList<Point> hits;
+    ArrayList<Point> mines;
 
     protected boolean isAvailable(String type, Point startCoordinate, int rotate) {
+        Point endCoordinate = getEndCoordinate(type, startCoordinate, rotate);
+        
+        if ((endCoordinate.x < 10 && endCoordinate.x >= 0) && (endCoordinate.y < 10 && endCoordinate.y >= 0)) {
+            return !isCrossing(startCoordinate, endCoordinate, rotate);
+        }
+        return false;
+    }
+
+    protected Point getEndCoordinate(String type, Point startCoordinate, int rotate) {
         switch (type) {
             case tMed:
                 if (rotate == 0) {
@@ -58,10 +67,114 @@ public class Field {
             default:
                 break;
         }
-        return (startCoordinate.x < 10 && startCoordinate.x >= 0) && (startCoordinate.y < 10 && startCoordinate.y >= 0);
+        return startCoordinate;
+    }
+
+    protected boolean isCrossing(Point startCoordinate, Point endCoordinate, int rotate) {
+        Point coordinate = startCoordinate;
+        switch (rotate) {
+            case 0:
+                for (int i = 0; i < endCoordinate.x - startCoordinate.x + 1; i++) {
+                    coordinate.x += i;
+                    for (Ship ship: ships) {
+                        for (Point shCoord: ship.coords) {
+                            if (shCoord.equals(coordinate)){
+                                return true;
+                            }
+                        }
+                    }
+                }
+                return false;
+
+            case 1:
+                for (int i = 0; i < endCoordinate.y - startCoordinate.y + 1; i++) {
+                    coordinate.y += i;
+                    for (Ship ship: ships) {
+                        for (Point shCoord: ship.coords) {
+                            if (shCoord.equals(coordinate)){
+                                return true;
+                            }
+                        }
+                    }
+                }
+                return false;
+
+            case 2:
+                for (int i = 0; i < startCoordinate.x - endCoordinate.x + 1; i++) {
+                    coordinate.x -= i;
+                    for (Ship ship: ships) {
+                        for (Point shCoord: ship.coords) {
+                            if (shCoord.equals(coordinate)){
+                                return true;
+                            }
+                        }
+                    }
+                }
+                return false;
+
+            case 3:
+                for (int i = 0; i < startCoordinate.y - endCoordinate.x + 1; i++) {
+                    coordinate.y -= i;
+                    for (Ship ship: ships) {
+                        for (Point shCoord: ship.coords) {
+                            if (shCoord.equals(coordinate)){
+                                return true;
+                            }
+                        }
+                    }
+                }
+                return false;
+
+            default:
+                break;
+        }
+        return true;
     }
 
     protected void setShip(String type, Point startCoordinate, int rotate) {
         this.ships.add(new Ship(type, startCoordinate, rotate));
+    }
+
+    // 0 - miss, 1 - hit, 2 - mine, 3 - already shot
+    protected int shot(Point coordinate) {
+        if (!isShooted(coordinate)){
+            for (Ship ship: ships) {
+                for (Point shCoord: ship.coords) {
+                    if (shCoord.equals(coordinate)) {
+                        if (ship.type.equals(tMine)) {
+                            this.mines.add(coordinate);
+                            return 2;
+                        } else {
+                            this.hits.add(coordinate);
+                            return 1;
+                        }
+                    }
+                }
+            }
+            this.misses.add(coordinate);
+            return 0;
+        } else {
+            return 3;
+        }
+        
+    }
+
+    protected boolean isShooted(Point coordinate) {
+        for (Point miss: misses) {
+            if (coordinate.equals(miss)) {
+                return true;
+            }
+        }
+        for (Point hit: hits) {
+            if (coordinate.equals(hit)) {
+                return true;
+            }
+        }
+        for (Point mine: mines) {
+            if (coordinate.equals(mine)) {
+                return true;
+            }
+        }
+        return false;
     }
 }
