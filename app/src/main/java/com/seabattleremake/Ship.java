@@ -8,12 +8,12 @@ public class Ship {
     protected static final String tLight = "LIGHT";
     protected static final String tMed = "MEDIUM";
     protected static final String tHeavy = "HEAVY";
-    protected static final String tCarrier = "Carrier";
+    protected static final String tCarrier = "CARRIER";
     protected static final String tMine = "MINE";
 
     boolean isLife = true;
     String type;
-    ArrayList<Point> coords;
+    ArrayList<Point> coords = new ArrayList<>();
 
     public Ship(String type, Point startCoordinate, int rotate) {
         this.type = type;

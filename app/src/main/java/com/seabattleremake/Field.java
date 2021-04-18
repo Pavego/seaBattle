@@ -12,10 +12,14 @@ import static com.seabattleremake.Ship.tCarrier;
 import static com.seabattleremake.Ship.tMine;
 
 public class Field {
-    ArrayList<Ship> ships;
-    ArrayList<Point> misses;
-    ArrayList<Point> hits;
-    ArrayList<Point> mines;
+    ArrayList<Ship> ships = new ArrayList<>();
+    ArrayList<Point> misses = new ArrayList<>();
+    ArrayList<Point> hits = new ArrayList<>();
+    ArrayList<Point> mines = new ArrayList<>();
+
+    public Field() {
+
+    }
 
     protected boolean isAvailable(String type, Point startCoordinate, int rotate) {
         Point endCoordinate = getEndCoordinate(type, startCoordinate, rotate);
@@ -71,62 +75,64 @@ public class Field {
     }
 
     protected boolean isCrossing(Point startCoordinate, Point endCoordinate, int rotate) {
-        Point coordinate = startCoordinate;
-        switch (rotate) {
-            case 0:
-                for (int i = 0; i < endCoordinate.x - startCoordinate.x + 1; i++) {
-                    coordinate.x += i;
-                    for (Ship ship: ships) {
-                        for (Point shCoord: ship.coords) {
-                            if (shCoord.equals(coordinate)){
-                                return true;
+        if (ships.size() > 0) {
+            Point coordinate = startCoordinate;
+            switch (rotate) {
+                case 0:
+                    for (int i = 0; i < endCoordinate.x - startCoordinate.x + 1; i++) {
+                        coordinate.x += i;
+                        for (Ship ship : ships) {
+                            for (Point shCoord : ship.coords) {
+                                if (shCoord.equals(coordinate)) {
+                                    return true;
+                                }
                             }
                         }
                     }
-                }
-                return false;
+                    return false;
 
-            case 1:
-                for (int i = 0; i < endCoordinate.y - startCoordinate.y + 1; i++) {
-                    coordinate.y += i;
-                    for (Ship ship: ships) {
-                        for (Point shCoord: ship.coords) {
-                            if (shCoord.equals(coordinate)){
-                                return true;
+                case 1:
+                    for (int i = 0; i < endCoordinate.y - startCoordinate.y + 1; i++) {
+                        coordinate.y += i;
+                        for (Ship ship : ships) {
+                            for (Point shCoord : ship.coords) {
+                                if (shCoord.equals(coordinate)) {
+                                    return true;
+                                }
                             }
                         }
                     }
-                }
-                return false;
+                    return false;
 
-            case 2:
-                for (int i = 0; i < startCoordinate.x - endCoordinate.x + 1; i++) {
-                    coordinate.x -= i;
-                    for (Ship ship: ships) {
-                        for (Point shCoord: ship.coords) {
-                            if (shCoord.equals(coordinate)){
-                                return true;
+                case 2:
+                    for (int i = 0; i < startCoordinate.x - endCoordinate.x + 1; i++) {
+                        coordinate.x -= i;
+                        for (Ship ship : ships) {
+                            for (Point shCoord : ship.coords) {
+                                if (shCoord.equals(coordinate)) {
+                                    return true;
+                                }
                             }
                         }
                     }
-                }
-                return false;
+                    return false;
 
-            case 3:
-                for (int i = 0; i < startCoordinate.y - endCoordinate.x + 1; i++) {
-                    coordinate.y -= i;
-                    for (Ship ship: ships) {
-                        for (Point shCoord: ship.coords) {
-                            if (shCoord.equals(coordinate)){
-                                return true;
+                case 3:
+                    for (int i = 0; i < startCoordinate.y - endCoordinate.x + 1; i++) {
+                        coordinate.y -= i;
+                        for (Ship ship : ships) {
+                            for (Point shCoord : ship.coords) {
+                                if (shCoord.equals(coordinate)) {
+                                    return true;
+                                }
                             }
                         }
                     }
-                }
-                return false;
+                    return false;
 
-            default:
-                break;
+                default:
+                    break;
+            }
         }
         return true;
     }

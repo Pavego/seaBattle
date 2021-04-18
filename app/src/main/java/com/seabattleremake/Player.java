@@ -4,6 +4,7 @@ import android.graphics.Point;
 
 public class Player {
     Field field;
+    boolean turnSkip = false;
     
     public Player(Field field) {
         this.field = field;
@@ -15,15 +16,7 @@ public class Player {
 
     protected void setShip(String type, Point coordinate, int rotate) {
         if (this.field.isAvailable(type, coordinate, rotate)){
-            field.setShip(type, coordinate, rotate);
+            this.field.setShip(type, coordinate, rotate);
         }
-    }
-
-    protected int botShoot(Player player) {
-        return player.field.shot((new Point((int)(Math.random() * 10), (int)(Math.random() * 10))));
-    }
-
-    protected void botSetShip(String type, Point coordinate, int rotate) {
-
     }
 }
