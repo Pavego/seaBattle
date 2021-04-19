@@ -19,4 +19,8 @@ public class Player {
             this.field.setShip(type, coordinate, rotate);
         }
     }
+
+    protected Field getField() {
+        return this.field;
+    }
 }

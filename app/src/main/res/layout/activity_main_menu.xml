@@ -23,12 +23,13 @@
         android:id="@+id/new_game_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:onClick="click"
+        android:paddingStart="10dp"
+        android:paddingEnd="10dp"
         android:text="@string/new_game"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="@id/main_menu_text"
-        android:paddingStart="10dp"
-        android:paddingEnd="10dp" />
+        app:layout_constraintTop_toBottomOf="@+id/main_menu_text" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

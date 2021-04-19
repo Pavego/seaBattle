@@ -4,35 +4,40 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.View;
 
-import androidx.annotation.Nullable;
-
 public class Render extends View {
+    Field field = null;
     Paint paint = new Paint();
 
-    int height = getHeight();
-    int width = getWidth();
+    int height;
+    int width ;
 
-    int widthOffset = (int) (width * 0.10);
-    int heightOffset = (int) (height * 0.10);
+    int widthOffset;
+    int heightOffset;
 
-    public Render(Context context,  @Nullable AttributeSet attrs) {
+    public Render(Context context,  AttributeSet attrs) {
         super(context, attrs);
+    }
 
-        paint.setTextSize(96);
-        paint.setStrokeWidth(4);
+    public Render(Context context) {
+        this(context, null);
     }
 
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
 
-        drawHorizontalLines(canvas);
-        drawVerticalLines(canvas);
+        paint.setTextSize(72);
+        paint.setStrokeWidth(10);
+        if (field != null) {
+            drawHorizontalLines(canvas);
+            drawVerticalLines(canvas);
 
-        drawLetters(canvas);
-        drawNumbers(canvas);
+            drawLetters(canvas);
+            drawNumbers(canvas);
+        }
     }
 
     protected void drawHorizontalLines(Canvas canvas) {
@@ -49,21 +54,35 @@ public class Render extends View {
 
     protected void drawLetters(Canvas canvas) {
         int letter = 1040;
-        for (int w = 0; w <= width; w += (width - widthOffset) / 10){
+        for (int w = (int) (widthOffset * 1.15); w <= width; w += (width - widthOffset) / 10){
             if (letter == 1049) {
                 letter += 1;
             }
-            canvas.drawText(String.valueOf((char) letter), w, heightOffset, paint);
+            canvas.drawText(String.valueOf((char) letter), w, (float) (heightOffset * 0.7), paint);
             letter += 1;
         }
     }
 
     protected void drawNumbers(Canvas canvas) {
         int num = 1;
-        for (int h = 0; h <= height; h += (height - heightOffset) / 10) {
+        for (int h = (int) (heightOffset * 1.7); h <= height; h += (height - heightOffset) / 10) {
             canvas.drawText(String.valueOf(num), 0, h, paint);
             num += 1;
         }
+    }
+
+    protected void setField(Player player) {
+        field = player.getField();
+
+        this.height = getHeight();
+        this.width = getWidth();
+
+        heightOffset = height / 10;
+        widthOffset = width / 10;
+        Log.i("MY_TAG", "Height: " + String.valueOf(height));
+        Log.i("MY_TAG", "Height offset: " + String.valueOf(heightOffset));
+        Log.i("MY_TAG", "Width: " + String.valueOf(width));
+        Log.i("MY_TAG", "Width offset: " + String.valueOf(widthOffset));
     }
 
     @Override
