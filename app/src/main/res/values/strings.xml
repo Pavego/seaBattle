@@ -1,4 +1,7 @@
 <resources>
     <string name="app_name">Sea Battle Remake</string>
     <string name="new_game">Новая игра</string>
+    <string name="rotateRight">↻</string>
+    <string name="rotateLeft">↺</string>
+    <string name="rotateText">↑</string>
 </resources>

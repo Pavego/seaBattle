@@ -7,21 +7,21 @@ import android.util.AttributeSet;
 import android.util.Log;
 import android.view.View;
 
-public class Render extends View {
+public class fieldRender extends View {
     Field field = null;
     Paint paint = new Paint();
 
-    int height;
     int width ;
+    int height;
 
     int widthOffset;
     int heightOffset;
 
-    public Render(Context context,  AttributeSet attrs) {
+    public fieldRender(Context context,  AttributeSet attrs) {
         super(context, attrs);
     }
 
-    public Render(Context context) {
+    public fieldRender(Context context) {
         this(context, null);
     }
 
@@ -74,15 +74,21 @@ public class Render extends View {
     protected void setField(Player player) {
         field = player.getField();
 
-        this.height = getHeight();
-        this.width = getWidth();
+        width = getWidth();
+        height = getHeight();
 
-        heightOffset = height / 10;
         widthOffset = width / 10;
-        Log.i("MY_TAG", "Height: " + String.valueOf(height));
-        Log.i("MY_TAG", "Height offset: " + String.valueOf(heightOffset));
-        Log.i("MY_TAG", "Width: " + String.valueOf(width));
-        Log.i("MY_TAG", "Width offset: " + String.valueOf(widthOffset));
+        heightOffset = height / 10;
+    }
+
+    protected void setField(Player player, int width, int height) {
+        field = player.getField();
+
+        this.width = width;
+        this.height = height;
+
+        widthOffset = width / 10;
+        heightOffset = height / 10;
     }
 
     @Override
@@ -92,6 +98,8 @@ public class Render extends View {
     }
 
     protected void performClick(float x, float y) {
-
+        x = (int) ((x - widthOffset) / 10);
+        y = (int) ((y - heightOffset) / 10);
+//        field.setShip();
     }
 }

@@ -5,10 +5,10 @@ import android.graphics.Point;
 import java.util.ArrayList;
 
 import com.seabattleremake.Ship;
-import static com.seabattleremake.Ship.tLight;
-import static com.seabattleremake.Ship.tMed;
-import static com.seabattleremake.Ship.tHeavy;
 import static com.seabattleremake.Ship.tCarrier;
+import static com.seabattleremake.Ship.tHeavy;
+import static com.seabattleremake.Ship.tMed;
+import static com.seabattleremake.Ship.tLight;
 import static com.seabattleremake.Ship.tMine;
 
 public class Field {
@@ -76,14 +76,13 @@ public class Field {
 
     protected boolean isCrossing(Point startCoordinate, Point endCoordinate, int rotate) {
         if (ships.size() > 0) {
-            Point coordinate = startCoordinate;
             switch (rotate) {
                 case 0:
                     for (int i = 0; i < endCoordinate.x - startCoordinate.x + 1; i++) {
-                        coordinate.x += i;
+                        startCoordinate.x += i;
                         for (Ship ship : ships) {
                             for (Point shCoord : ship.coords) {
-                                if (shCoord.equals(coordinate)) {
+                                if (shCoord.equals(startCoordinate)) {
                                     return true;
                                 }
                             }
@@ -93,10 +92,10 @@ public class Field {
 
                 case 1:
                     for (int i = 0; i < endCoordinate.y - startCoordinate.y + 1; i++) {
-                        coordinate.y += i;
+                        startCoordinate.y += i;
                         for (Ship ship : ships) {
                             for (Point shCoord : ship.coords) {
-                                if (shCoord.equals(coordinate)) {
+                                if (shCoord.equals(startCoordinate)) {
                                     return true;
                                 }
                             }
@@ -106,10 +105,10 @@ public class Field {
 
                 case 2:
                     for (int i = 0; i < startCoordinate.x - endCoordinate.x + 1; i++) {
-                        coordinate.x -= i;
+                        startCoordinate.x -= i;
                         for (Ship ship : ships) {
                             for (Point shCoord : ship.coords) {
-                                if (shCoord.equals(coordinate)) {
+                                if (shCoord.equals(startCoordinate)) {
                                     return true;
                                 }
                             }
@@ -119,10 +118,10 @@ public class Field {
 
                 case 3:
                     for (int i = 0; i < startCoordinate.y - endCoordinate.x + 1; i++) {
-                        coordinate.y -= i;
+                        startCoordinate.y -= i;
                         for (Ship ship : ships) {
                             for (Point shCoord : ship.coords) {
-                                if (shCoord.equals(coordinate)) {
+                                if (shCoord.equals(startCoordinate)) {
                                     return true;
                                 }
                             }
@@ -134,7 +133,7 @@ public class Field {
                     break;
             }
         }
-        return true;
+        return false;
     }
 
     protected void setShip(String type, Point startCoordinate, int rotate) {

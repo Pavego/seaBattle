@@ -17,10 +17,10 @@ public class Ship {
 
     public Ship(String type, Point startCoordinate, int rotate) {
         this.type = type;
-        getCoords(startCoordinate, rotate);
+        setCoords(startCoordinate, rotate);
     }
 
-    protected void getCoords(Point startCoordinate, int rotate) {
+    protected void setCoords(Point startCoordinate, int rotate) {
         switch (type) {
             case tLight:
             case tMine:
