@@ -7,94 +7,73 @@
     android:theme="@android:style/Theme.NoTitleBar.Fullscreen">
 
     <TextView
-        android:id="@+id/rotate_text"
+        android:id="@+id/rotateText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_weight="1"
         android:text="@string/rotateText"
-        android:textColor="#000000"
+        android:textColor="@color/black"
         android:textSize="16pt"
-        app:layout_constraintTop_toBottomOf="@id/rotate_button_left"
-        app:layout_constraintBottom_toTopOf="@id/rotate_button_right"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent" />
-
-    <Button
-        android:id="@+id/rotate_button_right"
-        style="@style/Widget.AppCompat.Button.Borderless"
-        android:layout_width="60dp"
-        android:layout_height="80dp"
-
-        android:onClick="changeRotateRight"
-        android:text="@string/rotateRight"
-        android:textColor="#000000"
-        android:textSize="16pt"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/rotateButtonLeft"
+        app:layout_constraintBottom_toTopOf="@id/rotateButtonRight"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/rotate_text"/>
+         />
 
     <Button
-        android:id="@+id/rotate_button_left"
+        android:id="@+id/rotateButtonLeft"
         style="@style/Widget.AppCompat.Button.Borderless"
-        android:layout_width="60dp"
-        android:layout_height="80dp"
-
-        android:onClick="changeRotateLeft"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:text="@string/rotateLeft"
-        android:textColor="#000000"
+        android:textColor="@color/black"
         android:textSize="16pt"
-        app:layout_constraintBottom_toTopOf="@id/rotate_text"
+        app:layout_constraintBottom_toTopOf="@id/rotateText"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <Button
+        android:id="@+id/rotateButtonRight"
+        style="@style/Widget.AppCompat.Button.Borderless"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/rotateRight"
+        android:textColor="@color/black"
+        android:textSize="16pt"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/rotateText" />
+
     <LinearLayout
-        android:id="@+id/linearLayout2"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:baselineAligned="false"
-        android:orientation="horizontal">
+        android:orientation="vertical"
+        android:weightSum="8" >
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/player_field_layout"
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="7"
+            android:orientation="horizontal">
+        </LinearLayout>
+
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:padding="30dp">
+            android:paddingLeft="30dp"
+            android:paddingRight="30dp"
+            android:paddingBottom="30dp"
+            android:orientation="horizontal">
 
-            <com.seabattleremake.fieldRender
-                android:id="@+id/player_field"
+            <com.seabattleremake.Render
+                android:id="@+id/Render"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent" />
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/ship_setting_layout"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:padding="30dp">
-
-            <com.seabattleremake.shipSettingRender
-                android:id="@+id/ship_setting"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/bot_field_layout"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:padding="30dp"
-            android:visibility="gone">
-
-            <com.seabattleremake.fieldRender
-                android:id="@+id/bot_field"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
+        </LinearLayout>
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
