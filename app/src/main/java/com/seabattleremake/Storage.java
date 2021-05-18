@@ -104,4 +104,62 @@ public class Storage {
     protected void changeEnemySkip() {
         isEnemySkip = !isEnemySkip;
     }
+
+    protected void shipsCount(String type) {
+        switch (type) {
+            case "CARRIAGE":
+                if (shipsToSet[4] > 0) {
+                    shipsToSet[4] -= 1;
+                }
+                break;
+            case "HEAVY":
+                if (shipsToSet[3] > 0) {
+                    shipsToSet[3] -= 1;
+                }
+                break;
+            case "MEDIUM":
+                if (shipsToSet[2] > 0) {
+                    shipsToSet[2] -= 1;
+                }
+                break;
+            case "LIGHT":
+                if (shipsToSet[1] > 0) {
+                    shipsToSet[1] -= 1;
+                }
+                break;
+            case "MINE":
+                if (shipsToSet[0] > 0) {
+                    shipsToSet[0] -= 1;
+                }
+                break;
+            default:
+                break;
+        }
+    }
+
+    protected boolean isShipAvailable(String type) {
+        switch (type) {
+            case "CARRIAGE":
+                return shipsToSet[4] > 0;
+            case "HEAVY":
+                return shipsToSet[3] > 0;
+            case "MEDIUM":
+                return shipsToSet[2] > 0;
+            case "LIGHT":
+                return shipsToSet[1] > 0;
+            case "MINE":
+                return shipsToSet[0] > 0;
+            default:
+                return false;
+        }
+    }
+
+    protected boolean isPlayerReady() {
+        for (int ship: shipsToSet) {
+            if (ship > 0) {
+                return false;
+            }
+        }
+        return true;
+    }
 }

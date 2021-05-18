@@ -5,7 +5,6 @@ import android.graphics.Point;
 import java.util.ArrayList;
 
 public class Ship {
-    final String type = "SHIP";
     ArrayList<Point> coordinates = new ArrayList<>();
 
     public Ship(Point startCoordinate, int rotate) {

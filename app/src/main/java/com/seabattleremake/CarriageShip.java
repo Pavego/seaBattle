@@ -3,8 +3,6 @@ package com.seabattleremake;
 import android.graphics.Point;
 
 public class CarriageShip extends Ship {
-    final String type = "CARRIAGE";
-
     public CarriageShip(Point startCoordinate, int rotate) {
         super(startCoordinate, rotate);
     }

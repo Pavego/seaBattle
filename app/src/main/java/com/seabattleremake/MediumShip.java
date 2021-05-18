@@ -3,8 +3,6 @@ package com.seabattleremake;
 import android.graphics.Point;
 
 public class MediumShip extends Ship {
-    final String type = "MEDIUM";
-
     public MediumShip(Point startCoordinate, int rotate) {
         super(startCoordinate, rotate);
     }

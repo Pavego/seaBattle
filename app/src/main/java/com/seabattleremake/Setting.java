@@ -14,14 +14,22 @@ public class Setting {
         Log.i("MY_TAG", String.valueOf(storage.enemyShips));
     }
 
-    protected void setPlayerShip(String type, Point startCoordinate, int rotate) {
-        if (isAvailablePlayer(type, startCoordinate, rotate)) {
-            storage.addPlayerShip(type, startCoordinate, rotate);
+    protected boolean setPlayerShip(Point startCoordinate, int rotate) {
+        if (isAvailablePlayer(currentShip, startCoordinate, rotate) && storage.isShipAvailable(currentShip)) {
+            storage.addPlayerShip(currentShip, startCoordinate, rotate);
+            storage.shipsCount(currentShip);
+            return true;
+        } else {
+            return false;
         }
     }
 
     protected void setCurrentShip(String type) {
-        currentShip = type;
+        if (storage.isShipAvailable(type)) {
+            currentShip = type;
+        } else {
+            currentShip = "NONE";
+        }
     }
 
     protected void setEnemyShip(String type, Point startCoordinate, int rotate) {
@@ -140,43 +148,43 @@ public class Setting {
         switch (type) {
             case "MINE":
             case "LIGHT":
-                return (0 <= startCoordinate.x && startCoordinate.x <= 10 && 0 <= startCoordinate.y && startCoordinate.y <= 10);
+                return (0 <= startCoordinate.x && startCoordinate.x <= 9 && 0 <= startCoordinate.y && startCoordinate.y <= 9);
             case "MEDIUM":
                 switch (rotate) {
                     case 0:
-                        return (0 <= startCoordinate.x && startCoordinate.x <= 10 && 0 <= startCoordinate.y - 1 && startCoordinate.y - 1 <= 10);
+                        return (0 <= startCoordinate.x && startCoordinate.x <= 9 && 0 <= startCoordinate.y - 1 && startCoordinate.y - 1 <= 9);
                     case 1:
-                        return (0 <= startCoordinate.x + 1 && startCoordinate.x + 1 <= 10 && 0 <= startCoordinate.y && startCoordinate.y <= 10);
+                        return (0 <= startCoordinate.x + 1 && startCoordinate.x + 1 <= 9 && 0 <= startCoordinate.y && startCoordinate.y <= 9);
                     case 2:
-                        return (0 <= startCoordinate.x && startCoordinate.x <= 10 && 0 <= startCoordinate.y + 1 && startCoordinate.y + 1 <= 10);
+                        return (0 <= startCoordinate.x && startCoordinate.x <= 9 && 0 <= startCoordinate.y + 1 && startCoordinate.y + 1 <= 9);
                     case 3:
-                        return (0 <= startCoordinate.x - 1 && startCoordinate.x - 1 <= 10 && 0 <= startCoordinate.y && startCoordinate.y <= 10);
+                        return (0 <= startCoordinate.x - 1 && startCoordinate.x - 1 <= 9 && 0 <= startCoordinate.y && startCoordinate.y <= 9);
                     default:
                         return false;
                 }
             case "HEAVY":
                 switch (rotate) {
                     case 0:
-                        return (0 <= startCoordinate.x && startCoordinate.x <= 10 && 0 <= startCoordinate.y - 2 && startCoordinate.y - 2 <= 10);
+                        return (0 <= startCoordinate.x && startCoordinate.x <= 9 && 0 <= startCoordinate.y - 2 && startCoordinate.y - 2 <= 9);
                     case 1:
-                        return (0 <= startCoordinate.x + 2 && startCoordinate.x + 2 <= 10 && 0 <= startCoordinate.y && startCoordinate.y <= 10);
+                        return (0 <= startCoordinate.x + 2 && startCoordinate.x + 2 <= 9 && 0 <= startCoordinate.y && startCoordinate.y <= 9);
                     case 2:
-                        return (0 <= startCoordinate.x && startCoordinate.x <= 10 && 0 <= startCoordinate.y + 2 && startCoordinate.y + 2 <= 10);
+                        return (0 <= startCoordinate.x && startCoordinate.x <= 9 && 0 <= startCoordinate.y + 2 && startCoordinate.y + 2 <= 9);
                     case 3:
-                        return (0 <= startCoordinate.x - 2 && startCoordinate.x - 2 <= 10 && 0 <= startCoordinate.y && startCoordinate.y <= 10);
+                        return (0 <= startCoordinate.x - 2 && startCoordinate.x - 2 <= 9 && 0 <= startCoordinate.y && startCoordinate.y <= 9);
                     default:
                         return false;
                 }
             case "CARRIAGE":
                 switch (rotate) {
                     case 0:
-                        return (0 <= startCoordinate.x && startCoordinate.x <= 10 && 0 <= startCoordinate.y - 3 && startCoordinate.y - 3 <= 10);
+                        return (0 <= startCoordinate.x && startCoordinate.x <= 9 && 0 <= startCoordinate.y - 3 && startCoordinate.y - 3 <= 9);
                     case 1:
-                        return (0 <= startCoordinate.x + 3 && startCoordinate.x + 3 <= 10 && 0 <= startCoordinate.y && startCoordinate.y <= 10);
+                        return (0 <= startCoordinate.x + 3 && startCoordinate.x + 3 <= 9 && 0 <= startCoordinate.y && startCoordinate.y <= 9);
                     case 2:
-                        return (0 <= startCoordinate.x && startCoordinate.x <= 10 && 0 <= startCoordinate.y + 3 && startCoordinate.y + 3 <= 10);
+                        return (0 <= startCoordinate.x && startCoordinate.x <= 9 && 0 <= startCoordinate.y + 3 && startCoordinate.y + 3 <= 9);
                     case 3:
-                        return (0 <= startCoordinate.x - 3 && startCoordinate.x - 3 <= 10 && 0 <= startCoordinate.y && startCoordinate.y <= 10);
+                        return (0 <= startCoordinate.x - 3 && startCoordinate.x - 3 <= 9 && 0 <= startCoordinate.y && startCoordinate.y <= 9);
                     default:
                         return false;
                 }

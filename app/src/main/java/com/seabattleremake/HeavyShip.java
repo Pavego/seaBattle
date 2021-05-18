@@ -3,10 +3,8 @@ package com.seabattleremake;
 import android.graphics.Point;
 
 public class HeavyShip extends Ship {
-    final String type = "HEAVY";
-
     public HeavyShip(Point startCoordinate, int rotate) {
-        super( startCoordinate, rotate);
+        super(startCoordinate, rotate);
     }
 
     protected void getCoordinates(Point startCoordinate, int rotate) {
