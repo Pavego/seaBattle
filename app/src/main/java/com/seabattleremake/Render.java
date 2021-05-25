@@ -65,7 +65,7 @@ public class Render extends View {
 
         drawPlayerShips(canvas);
 
-        drawPlayerShots(canvas);
+        drawEnemyShots(canvas);
     }
 
     protected void drawEnemyField(Canvas canvas) {
@@ -75,7 +75,7 @@ public class Render extends View {
 
         drawEnemyShips(canvas);
 
-        drawEnemyShots(canvas);
+        drawPlayerShots(canvas);
     }
 
     protected void drawSettingField(Canvas canvas) {
@@ -273,27 +273,51 @@ public class Render extends View {
     }
 
     protected void drawPlayerHits(Canvas canvas) {
-
+        paint.setColor(Color.RED);
+        for (Point coord: storage.playerHits) {
+            Point coordinate = getEnemyPixelCoordinate(coord);
+            canvas.drawText("!", coordinate.x + 25, coordinate.y + heightOffset - 15, paint);
+        }
     }
 
     protected void drawEnemyHits(Canvas canvas) {
-
+        paint.setColor(Color.RED);
+        for (Point coord: storage.enemyHits) {
+            Point coordinate = getPlayerPixelCoordinate(coord);
+            canvas.drawText("!", coordinate.x + 25, coordinate.y + heightOffset - 15, paint);
+        }
     }
 
     protected void drawPlayerMisses(Canvas canvas) {
-
+        paint.setColor(Color.BLACK);
+        for (Point coord: storage.playerMisses) {
+            Point coordinate = getEnemyPixelCoordinate(coord);
+            canvas.drawText("!", coordinate.x + 25, coordinate.y + heightOffset - 15, paint);
+        }
     }
 
     protected void drawEnemyMisses(Canvas canvas) {
-
+        paint.setColor(Color.BLACK);
+        for (Point coord: storage.enemyMisses) {
+            Point coordinate = getPlayerPixelCoordinate(coord);
+            canvas.drawText("!", coordinate.x + 25, coordinate.y + heightOffset - 15, paint);
+        }
     }
 
     protected void drawPlayerMines(Canvas canvas) {
-
+        paint.setColor(0xfff8860b);
+        for (Point coord: storage.playerMines) {
+            Point coordinate = getEnemyPixelCoordinate(coord);
+            canvas.drawText("!", coordinate.x + 25, coordinate.y + heightOffset - 15, paint);
+        }
     }
 
     protected void drawEnemyMines(Canvas canvas) {
-
+        paint.setColor(Color.RED);
+        for (Point coord: storage.enemyMines) {
+            Point coordinate = getPlayerPixelCoordinate(coord);
+            canvas.drawText("!", coordinate.x + 25, coordinate.y + heightOffset - 15, paint);
+        }
     }
 
     protected void setStorage(Storage storage) {
@@ -358,6 +382,27 @@ public class Render extends View {
     }
 
     public void performClick(float x, float y) {
+        Point coordinate =  getEnemyCellCoordinate(x, y);
+//        Log.i("MY_TAG", String.valueOf(coordinate));
+        if (!storage.isPlayerSkip) {
+            if (storage.addPlayerHit(coordinate) && !storage.isEnemySkip) {
+                enemyTurn();
+            }
+        } else {
+            if (!storage.isEnemySkip) {
+                enemyTurn();
+            } else {
+                storage.isEnemySkip = false;
+            }
 
+            storage.isPlayerSkip = false;
+        }
+        storage.isEnemySkip = false;
+    }
+
+    private void enemyTurn() {
+        while (!storage.addEnemyHit()) {
+
+        }
     }
 }

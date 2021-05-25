@@ -37,12 +37,12 @@ public class GameActivity extends AppCompatActivity {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
                 if (render.isGameStarted) {
-                    render.performClick(event.getX(), event.getY());
-                    return false;
+                    if (event.getX() > (int) (9 * (render.width / 16)) + render.widthOffset) {
+                        render.performClick(event.getX(), event.getY());
+                    }
                 } else {
                     if (event.getX() > (int) (9 * (render.width / 16))) {
                         settings.setCurrentShip(render.getCurrentShip(event.getY()));
-                        render.invalidate();
                     } else if (event.getX() < (int) (7 * (render.width / 16))) {
                         if (settings.setPlayerShip(render.getPlayerCellCoordinate(event.getX(), event.getY()), rotate)) {
 //                            Setting finished
@@ -50,11 +50,11 @@ public class GameActivity extends AppCompatActivity {
                                 hideRotateMenu();
                                 render.isGameStarted = true;
                             }
-                            render.invalidate();
                         }
                     }
-                    return false;
                 }
+                render.invalidate();
+                return false;
             }
         });
     }

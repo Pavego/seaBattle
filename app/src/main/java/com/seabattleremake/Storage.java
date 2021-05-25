@@ -1,6 +1,7 @@
 package com.seabattleremake;
 
 import android.graphics.Point;
+import android.util.Log;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -73,12 +74,83 @@ public class Storage {
         }
     }
 
-    protected void addPlayerHit(Point coordinate) {
-        playerHits.add(coordinate);
+    protected boolean addPlayerHit(Point coordinate) {
+        coordinate.x -= 1;
+//        coordinate.y += 1;
+//        Log.i("MY_TAG", String.valueOf(coordinate));
+        for (Point coord: playerHits) {
+            if (coordinate.equals(coord)) {
+                return false;
+            }
+        }
+
+        for (Point coord: playerMines) {
+            if (coordinate.equals(coord)) {
+                return false;
+            }
+        }
+
+        for (Point coord: playerMisses) {
+            if (coordinate.equals(coord)) {
+                return false;
+            }
+        }
+
+        for (Ship ship: enemyShips) {
+            for (Point coordSh: ship.coordinates) {
+                if (coordinate.equals(coordSh)) {
+                    if (ship instanceof MineShip) {
+                        playerMines.add(coordinate);
+                        isPlayerSkip = true;
+                    } else {
+                        playerHits.add(coordinate);
+                    }
+                    return true;
+                }
+            }
+        }
+
+        playerMisses.add(coordinate);
+        return true;
     }
 
-    protected void addEnemyHit(Point coordinate) {
-        enemyHits.add(coordinate);
+    protected boolean addEnemyHit() {
+        Point coordinate = new Point((int) (Math.random() * 10), (int) (Math.random() * 10));
+        Log.i("MY_TAG", String.valueOf(coordinate));
+        for (Point coord: enemyHits) {
+            if (coordinate.equals(coord)) {
+                return false;
+            }
+        }
+
+        for (Point coord: enemyMines) {
+            if (coordinate.equals(coord)) {
+                return false;
+            }
+        }
+
+        for (Point coord: enemyMisses) {
+            if (coordinate.equals(coord)) {
+                return false;
+            }
+        }
+
+        for (Ship ship: playerShips) {
+            for (Point coordSh: ship.coordinates) {
+                if (coordinate.equals(coordSh)) {
+                    if (ship instanceof MineShip) {
+                        enemyMines.add(coordinate);
+                        isEnemySkip = true;
+                    } else {
+                        enemyHits.add(coordinate);
+                    }
+                    return true;
+                }
+            }
+        }
+
+        enemyMisses.add(coordinate);
+        return true;
     }
 
     protected void addPlayerMiss(Point coordinate) {
@@ -95,14 +167,6 @@ public class Storage {
 
     protected void addEnemyMine(Point coordinate) {
         enemyMines.add(coordinate);
-    }
-
-    protected void changePlayerSkip() {
-        isPlayerSkip = !isPlayerSkip;
-    }
-
-    protected void changeEnemySkip() {
-        isEnemySkip = !isEnemySkip;
     }
 
     protected void shipsCount(String type) {
