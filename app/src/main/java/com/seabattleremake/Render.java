@@ -21,7 +21,6 @@ public class Render extends View {
     int fieldWidth;
     int fieldHeight;
 
-
     Storage storage;
 
     boolean isGameStarted = false;
@@ -43,14 +42,22 @@ public class Render extends View {
         paint.setStrokeWidth(10);
         paint.setColor(Color.BLACK);
 
-        drawPlayerField(canvas);
-        if (!isGameStarted) {
-            drawSettingField(canvas);
-        } else {
-            drawEnemyField(canvas);
+        switch (storage.winner) {
+            case 1:
+                drawPLayerWin(canvas);
+                break;
+            case 2:
+                drawEnemyWin(canvas);
+                break;
+            default:
+                drawPlayerField(canvas);
+                if (!isGameStarted) {
+                    drawSettingField(canvas);
+                } else {
+                    drawEnemyField(canvas);
+                }
+                break;
         }
-//        test
-//        drawEnemyField(canvas);
     }
 
     @Override
@@ -73,7 +80,7 @@ public class Render extends View {
         drawEnemyNums(canvas);
         drawEnemyLetters(canvas);
 
-        drawEnemyShips(canvas);
+//        drawEnemyShips(canvas);
 
         drawPlayerShots(canvas);
     }
@@ -320,6 +327,20 @@ public class Render extends View {
         }
     }
 
+    protected void drawPLayerWin(Canvas canvas) {
+        paint.setColor(Color.BLACK);
+        paint.setTextSize(128);
+
+        canvas.drawText("Вы победили!", (int) (width / 3.1), (int) (height / 2), paint);
+    }
+
+    protected void drawEnemyWin(Canvas canvas) {
+        paint.setColor(Color.BLACK);
+        paint.setTextSize(128);
+
+        canvas.drawText("Вы проиграли!", (int) (width / 3.2), (int) (height / 2), paint);
+    }
+
     protected void setStorage(Storage storage) {
         this.storage = storage;
     }
@@ -383,7 +404,6 @@ public class Render extends View {
 
     public void performClick(float x, float y) {
         Point coordinate =  getEnemyCellCoordinate(x, y);
-//        Log.i("MY_TAG", String.valueOf(coordinate));
         if (!storage.isPlayerSkip) {
             if (storage.addPlayerHit(coordinate) && !storage.isEnemySkip) {
                 enemyTurn();
@@ -394,9 +414,9 @@ public class Render extends View {
             } else {
                 storage.isEnemySkip = false;
             }
-
             storage.isPlayerSkip = false;
         }
+        storage.setWinner();
         storage.isEnemySkip = false;
     }
 

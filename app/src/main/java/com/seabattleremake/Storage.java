@@ -25,6 +25,11 @@ public class Storage {
 
     int[] shipsToSet = new int[] {2, 2, 3, 2, 1};
 
+    int playerPoints = 0;
+    int enemyPoints = 0;
+
+    int winner = 0;
+
     public Storage() {
         isPlayerSkip = false;
         isEnemySkip = false;
@@ -105,6 +110,7 @@ public class Storage {
                     } else {
                         playerHits.add(coordinate);
                     }
+                    enemyPoints -= 1;
                     return true;
                 }
             }
@@ -116,7 +122,7 @@ public class Storage {
 
     protected boolean addEnemyHit() {
         Point coordinate = new Point((int) (Math.random() * 10), (int) (Math.random() * 10));
-        Log.i("MY_TAG", String.valueOf(coordinate));
+//        Log.i("MY_TAG", String.valueOf(coordinate));
         for (Point coord: enemyHits) {
             if (coordinate.equals(coord)) {
                 return false;
@@ -144,6 +150,7 @@ public class Storage {
                     } else {
                         enemyHits.add(coordinate);
                     }
+                    playerPoints -= 1;
                     return true;
                 }
             }
@@ -151,22 +158,6 @@ public class Storage {
 
         enemyMisses.add(coordinate);
         return true;
-    }
-
-    protected void addPlayerMiss(Point coordinate) {
-        playerMisses.add(coordinate);
-    }
-
-    protected void addEnemyMiss(Point coordinate) {
-        enemyMisses.add(coordinate);
-    }
-
-    protected void addPlayerMine(Point coordinate) {
-        playerMines.add(coordinate);
-    }
-
-    protected void addEnemyMine(Point coordinate) {
-        enemyMines.add(coordinate);
     }
 
     protected void shipsCount(String type) {
@@ -224,6 +215,24 @@ public class Storage {
                 return false;
             }
         }
+        setPoints();
         return true;
+    }
+
+    private void setPoints() {
+        playerPoints = 20;
+        enemyPoints = 20;
+    }
+
+    protected void setWinner() {
+        if (playerPoints == 0) {
+//            enemy wins
+            winner = 2;
+        } else if (enemyPoints == 0) {
+//            player wins
+            winner = 1;
+        } else {
+            winner = 0;
+        }
     }
 }

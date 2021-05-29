@@ -4,4 +4,5 @@
     <string name="rotateRight">↻</string>
     <string name="rotateLeft">↺</string>
     <string name="rotateText">↑</string>
+    <string name="restartButton">РЕСТАРТ</string>
 </resources>

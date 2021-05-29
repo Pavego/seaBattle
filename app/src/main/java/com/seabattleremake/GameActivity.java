@@ -1,5 +1,6 @@
 package com.seabattleremake;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MotionEvent;
@@ -77,6 +78,12 @@ public class GameActivity extends AppCompatActivity {
             rotate = 3;
         }
         updateRotateText();
+    }
+
+    public void restart(View v) {
+        Intent intent = getIntent();
+        finish();
+        startActivity(intent);
     }
 
     private void updateRotateText() {
