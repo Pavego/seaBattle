@@ -6,7 +6,6 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Point;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.View;
 
 public class Render extends View {
@@ -79,8 +78,6 @@ public class Render extends View {
         drawEnemyLines(canvas);
         drawEnemyNums(canvas);
         drawEnemyLetters(canvas);
-
-//        drawEnemyShips(canvas);
 
         drawPlayerShots(canvas);
     }

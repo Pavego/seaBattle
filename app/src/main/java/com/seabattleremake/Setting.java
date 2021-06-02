@@ -1,7 +1,6 @@
 package com.seabattleremake;
 
 import android.graphics.Point;
-import android.util.Log;
 
 public class Setting {
     Storage storage;
@@ -11,7 +10,6 @@ public class Setting {
     public Setting(Storage storage) {
         this.storage = storage;
         generateEnemyField();
-//        Log.i("MY_TAG", String.valueOf(storage.enemyShips));
     }
 
     protected boolean setPlayerShip(Point startCoordinate, int rotate) {

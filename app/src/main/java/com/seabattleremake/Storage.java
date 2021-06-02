@@ -1,7 +1,6 @@
 package com.seabattleremake;
 
 import android.graphics.Point;
-import android.util.Log;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -81,8 +80,6 @@ public class Storage {
 
     protected boolean addPlayerHit(Point coordinate) {
         coordinate.x -= 1;
-//        coordinate.y += 1;
-//        Log.i("MY_TAG", String.valueOf(coordinate));
         for (Point coord: playerHits) {
             if (coordinate.equals(coord)) {
                 return false;
@@ -122,7 +119,6 @@ public class Storage {
 
     protected boolean addEnemyHit() {
         Point coordinate = new Point((int) (Math.random() * 10), (int) (Math.random() * 10));
-//        Log.i("MY_TAG", String.valueOf(coordinate));
         for (Point coord: enemyHits) {
             if (coordinate.equals(coord)) {
                 return false;
